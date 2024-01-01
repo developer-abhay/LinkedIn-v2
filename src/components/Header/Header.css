@@ -1,0 +1,111 @@
+.header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background-color: white;
+  display: flex;
+  justify-content: space-evenly;
+  border-bottom: 0.1px solid lightgray;
+  padding: 10px 0px;
+  z-index: 999;
+}
+
+.header-left {
+  display: flex;
+}
+
+.logo {
+  color: rgb(50, 130, 200);
+  margin-right: 10px;
+}
+
+.header-search {
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 20px;
+  color: gray;
+  background-color: #eef3f8;
+}
+
+.header-search > input {
+  border: none;
+  outline: none;
+  background: none;
+  display: none;
+}
+
+.display-block {
+  display: block !important;
+  width: 400px !important;
+}
+.display-none {
+  display: none !important;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 74%;
+}
+
+/* Logout Screen */
+.logout-option {
+  width: 200px;
+  position: absolute;
+  top: 65px;
+  right: 2%;
+  background-color: white;
+  border: 1px solid rgb(201, 201, 201);
+  border-radius: 10px;
+  text-align: center;
+}
+
+.logout-option > div {
+  display: flex;
+  padding: 10px;
+  gap: 10px;
+  align-items: center;
+}
+
+.logout-option > hr {
+  background-color: rgb(192, 192, 192);
+  height: 0.5px;
+  border: none;
+}
+.logout-option > button {
+  color: rgb(249, 59, 59);
+  border: 2px solid rgb(249, 59, 59);
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 5px 10px;
+  margin: 10px;
+  background-color: white;
+}
+.logout-option > button:hover {
+  background-color: rgb(249, 59, 59);
+  color: white;
+}
+
+@media only screen and (min-width: 600px) {
+  .header-right {
+    width: auto;
+  }
+  .header-search > input {
+    display: block;
+  }
+  .logout-option {
+    right: 10%;
+  }
+}
+
+@media only screen and (min-width: 880px) {
+  .header-left {
+    margin-right: 5%;
+  }
+  .logout-option {
+    right: 20%;
+  }
+}
