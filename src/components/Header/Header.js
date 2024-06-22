@@ -15,6 +15,7 @@ import { auth } from "../../firebase";
 import { logout, selectUser } from "../../features/userSlice";
 import { signOut } from "firebase/auth";
 import { Avatar } from "@mui/material";
+import { Link } from "react-router-dom";
 
 function Header() {
   const user = useSelector(selectUser);
@@ -22,10 +23,11 @@ function Header() {
 
   //Show Logout
   const showLogout = () => {
+    const html = document.documentElement;
     const logoutOption = document.querySelector(".logout-option");
     logoutOption.classList.toggle("display-none");
-    console.log(logoutOption.classList);
   };
+
   //Logout
   const logoutApp = () => {
     try {
@@ -53,7 +55,7 @@ function Header() {
     html.addEventListener("click", closeMenuOnBodyClick);
   }
 
-  // Hide Search Bar
+  // Hide Search Bar function
   function hideSearch() {
     const html = document.documentElement;
     const headerRight = document.querySelector(".header-right");
@@ -70,6 +72,7 @@ function Header() {
   function closeMenuOnBodyClick(event) {
     // get the event path
     const path = event.composedPath();
+
     // check if it has the search element
     if (path.some((elem) => elem.id === "header-search")) {
       // terminate this function if it does
@@ -89,20 +92,24 @@ function Header() {
       </div>
 
       <div className="header-right">
-        <HeaderOption Icon={HomeIcon} title="Home" />
+        <HeaderOption Icon={HomeIcon} title="Home" link="/" />
         <HeaderOption Icon={PeopleIcon} title="My Network" />
         <HeaderOption Icon={WorkIcon} title="Jobs" />
         <HeaderOption Icon={TextsmsIcon} title="Messages" />
         <HeaderOption Icon={NotificationsIcon} title="Notifications" />
 
         <HeaderOption showLogout={showLogout} avatar={1} title="Me" />
-        <div className="logout-option display-none">
-          <div>
+        <div
+          className="logout-option display-none"
+          id="logout-option"
+          onClick={showLogout}
+        >
+          <Link to="/userprofile">
             <Avatar src={user.photoURL} alt="">
               {user?.displayName ? user.displayName[0] : " "}
             </Avatar>
             <h3>{user.displayName}</h3>
-          </div>
+          </Link>
           <hr />
           <button onClick={logoutApp}>SignOut</button>
         </div>

@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { login, selectUser } from "./features/userSlice";
 import { useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
-//
 // import AUDIO from "./assets/Recording (17).m4a";
 //Components
 import Feed from "./components/Feed/Feed";
@@ -17,10 +17,13 @@ import { onAuthStateChanged } from "firebase/auth";
 // import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
+import UserProfile from "./components/UserProfile/UserProfile";
 
 function App() {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
+
+  console.log(auth.currentUser);
 
   useEffect(() => {
     try {
@@ -47,14 +50,32 @@ function App() {
       {!user ? (
         <Login />
       ) : (
-        <>
+        <Router>
           <Header />
           <div className="app-body">
-            <Sidebar />
-            <Feed />
-            <Widgets />
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <>
+                    {" "}
+                    <Sidebar />
+                    <Feed />
+                    <Widgets />
+                  </>
+                }
+              />
+              <Route
+                path="/userprofile"
+                element={
+                  <>
+                    <UserProfile />
+                  </>
+                }
+              />
+            </Routes>
           </div>
-        </>
+        </Router>
       )}
     </div>
   );
