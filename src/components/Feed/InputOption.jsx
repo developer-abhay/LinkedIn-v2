@@ -1,6 +1,6 @@
 import React from "react";
 
-function InputOption({ Icon, title, color, feature }) {
+function InputOption({ Icon, title, color, feature, showModal }) {
   return (
     <button className="feed-option" onClick={feature}>
       <Icon className="feed-icon" style={{ color: color }} />

@@ -12,6 +12,7 @@ import NewspaperIcon from "@mui/icons-material/Newspaper";
 import InputOption from "./InputOption";
 //Components
 import Post from "../Post/Post";
+import PostModal from "./PostModal";
 //Firebase
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
@@ -60,31 +61,52 @@ function Feed() {
     setInput("");
   };
 
+  // Modal
+  const [open, setOpen] = useState(false);
+  const showModal = () => {
+    setOpen(true);
+  };
+
   return (
     <div className="feed">
       <div className="feed-input-container">
-        <div className="feed-input">
+        <PostModal
+          open={open}
+          setOpen={setOpen}
+          publishPost={publishPost}
+          setInput={setInput}
+          input={input}
+        />
+        <div className="feed-input" onClick={showModal}>
           <CreateIcon className="feed-icon" />
           <form>
-            <input
-              type="text"
-              placeholder="Start a post"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-            />
-            <button type="submit" onClick={(e) => publishPost(e)}>
-              Send
-            </button>
+            <input type="text" placeholder="Start a post" />
           </form>
         </div>
         <div className="feed-options">
-          <InputOption title="Photo" Icon={PhotoIcon} color="#6e96cb" />
-          <InputOption title="Video" Icon={SmartDisplayIcon} color="#d6de67" />
-          <InputOption title="Event" Icon={EventIcon} color="#c8a4de" />
+          <InputOption
+            title="Photo"
+            Icon={PhotoIcon}
+            color="#6e96cb"
+            feature={showModal}
+          />
+          <InputOption
+            title="Video"
+            Icon={SmartDisplayIcon}
+            color="#d6de67"
+            feature={showModal}
+          />
+          <InputOption
+            title="Event"
+            Icon={EventIcon}
+            color="#c8a4de"
+            feature={showModal}
+          />
           <InputOption
             title="Write Article"
             Icon={NewspaperIcon}
             color="#e37f7f"
+            feature={showModal}
           />
         </div>
       </div>

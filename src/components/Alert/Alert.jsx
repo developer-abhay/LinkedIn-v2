@@ -4,7 +4,7 @@ import "./Alert.css";
 const Alert = ({ alertText }) => {
   return (
     <>
-      <div class="alert-box">
+      <div className="alert-box warning">
         <WarningAmberIcon />
         <p>
           <strong> Error:</strong> {alertText}
