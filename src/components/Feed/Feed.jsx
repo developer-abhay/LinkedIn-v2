@@ -32,6 +32,7 @@ function Feed() {
 
   const [posts, setPosts] = useState([]);
   const [input, setInput] = useState("");
+
   const dbRef = collection(firestore, "posts");
 
   useEffect(() => {

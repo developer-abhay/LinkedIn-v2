@@ -27,7 +27,7 @@ function App() {
     try {
       onAuthStateChanged(auth, (currentUser) => {
         if (currentUser?.accessToken) {
-          console.log(currentUser);
+          // console.log(currentUser);
           //user is logged in
           dispatch(
             login({
