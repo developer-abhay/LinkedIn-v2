@@ -1,0 +1,12 @@
+.user-info-modal h3 {
+  font-size: 20px;
+}
+
+.user-info-modal p {
+  font-size: 12px;
+}
+
+.user-info-form input,
+.user-info-form .date-input {
+  height: 30px;
+}

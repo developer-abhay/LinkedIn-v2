@@ -99,6 +99,8 @@ function Header() {
         <HeaderOption Icon={NotificationsIcon} title="Notifications" />
 
         <HeaderOption showLogout={showLogout} avatar={1} title="Me" />
+
+        {/* Show user profile Modal */}
         <div
           className="logout-option display-none"
           id="logout-option"
@@ -108,10 +110,13 @@ function Header() {
             <Avatar src={user.photoURL} alt="">
               {user?.displayName ? user.displayName[0] : " "}
             </Avatar>
-            <h3>{user.displayName}</h3>
+            <div>
+              <h3>{user.displayName}</h3>
+              <p>Junior@IITR | Web developer | React.js</p>
+            </div>
           </Link>
           <hr />
-          <button onClick={logoutApp}>SignOut</button>
+          <button onClick={logoutApp}>Sign Out</button>
         </div>
       </div>
     </div>

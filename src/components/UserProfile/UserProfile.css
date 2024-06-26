@@ -1,6 +1,7 @@
 .user-profile {
   width: 100vw;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
@@ -12,6 +13,7 @@
   overflow: hidden;
   min-width: 550px;
   width: 80%;
+  position: relative;
 }
 
 .profile-card > img {
@@ -26,6 +28,23 @@
   height: 150px !important;
   border: 2px solid white;
   margin-left: 15px;
+}
+
+.edit-icon {
+  background-color: rgb(237, 237, 237);
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+.edit-icon:hover {
+  background-color: rgb(234, 228, 228);
+  cursor: pointer;
 }
 
 .profile-info {
@@ -89,4 +108,9 @@
   margin-bottom: 5px;
   text-wrap: wrap;
   font-weight: 500;
+}
+
+/* Posts */
+.user-posts {
+  width: 80%;
 }

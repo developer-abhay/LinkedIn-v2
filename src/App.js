@@ -23,19 +23,18 @@ function App() {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
-  console.log(auth.currentUser);
-
   useEffect(() => {
     try {
-      onAuthStateChanged(auth, (userA) => {
-        if (userA?.accessToken) {
+      onAuthStateChanged(auth, (currentUser) => {
+        if (currentUser?.accessToken) {
+          console.log(currentUser);
           //user is logged in
           dispatch(
             login({
-              email: userA.email,
-              uid: userA.uid,
-              displayName: userA.displayName,
-              photoURL: userA.photoURL,
+              email: currentUser.email,
+              uid: currentUser.uid,
+              displayName: currentUser.displayName,
+              photoURL: currentUser.photoURL,
             })
           );
         }

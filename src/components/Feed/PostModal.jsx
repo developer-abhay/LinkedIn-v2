@@ -9,19 +9,23 @@ import PhotoIcon from "@mui/icons-material/Photo";
 import SmartDisplayIcon from "@mui/icons-material/SmartDisplay";
 import EventIcon from "@mui/icons-material/Event";
 import NewspaperIcon from "@mui/icons-material/Newspaper";
-import { ref } from "firebase/storage";
+import { ref, uploadBytes } from "firebase/storage";
 import { storage } from "../../firebase";
 
 const PostModal = ({ open, setOpen, publishPost, input, setInput }) => {
   const [postBtnDisabled, setPostBtnDisabled] = useState(true);
 
+  //Upload Image to firebase storage
+  const [file, setFile] = useState(null);
+  const fileRef = ref(storage, `linkedIn-Clone/goku.jpeg`);
+
+  const uploadFile = async () => {
+    await uploadBytes(fileRef, file);
+  };
   useEffect(() => {
     setPostBtnDisabled(input.length === 0);
   }, [input]);
 
-  //Upload Image to firebase storage
-  const [file, setFile] = useState(null);
-  const fileRef = ref(storage, file);
   return (
     <>
       <Modal
@@ -67,8 +71,18 @@ const PostModal = ({ open, setOpen, publishPost, input, setInput }) => {
           }}
         ></textarea>
         <div className="post-options">
-          <input type="file" onChange={(e) => setFile(e.target.files)} />
-          <InputOption Icon={PhotoIcon} color="gray" />
+          <label htmlFor="post-image-upload">
+            <InputOption Icon={PhotoIcon} color="gray" />
+          </label>
+          <input
+            id="post-image-upload"
+            type="file"
+            onChange={(e) => {
+              setFile(e.target.files[0]);
+              uploadFile();
+            }}
+            hidden
+          />
           <InputOption Icon={SmartDisplayIcon} color="gray" />
           <InputOption Icon={EventIcon} color="gray" />
           <InputOption Icon={NewspaperIcon} color="gray" />
