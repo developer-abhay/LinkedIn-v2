@@ -12,8 +12,38 @@ import NewspaperIcon from "@mui/icons-material/Newspaper";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../../firebase";
 
-const PostModal = ({ open, setOpen, publishPost, input, setInput }) => {
+const PostModal = ({ user, open, setOpen, publishPost, input, setInput }) => {
   const [postBtnDisabled, setPostBtnDisabled] = useState(true);
+  const { displayName, photoURL } = user;
+  //Upload Image to firebase storage
+  const [imgUrl, setImgUrl] = useState(null);
+  const [progresspercent, setProgresspercent] = useState(0);
+
+  // Upload File
+  const uploadPostImage = (file) => {
+    // if (!file) return;
+    const storageRef = ref(storage, `postImages/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgresspercent(progress);
+      },
+      (error) => {
+        alert(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setImgUrl(downloadURL);
+          // console.log(downloadURL);
+        });
+      }
+    );
+  };
 
   useEffect(() => {
     setPostBtnDisabled(input.length === 0);
@@ -34,7 +64,7 @@ const PostModal = ({ open, setOpen, publishPost, input, setInput }) => {
             onClick={(e) => {
               setOpen(false);
               setInput("");
-              publishPost(e);
+              publishPost(e, imgUrl);
             }}
             disabled={postBtnDisabled}
           >
@@ -43,12 +73,12 @@ const PostModal = ({ open, setOpen, publishPost, input, setInput }) => {
         ]}
       >
         <div className="post-user-profile">
-          <Avatar src={""} className="avatar">
-            A
+          <Avatar src={photoURL ? photoURL : ""} className="avatar">
+            {displayName ? displayName[0] : ""}
           </Avatar>
           <div>
             <div>
-              <h2>Abhay Sharma</h2>
+              <h2>{displayName}</h2>
               <ArrowDropDownIcon />
             </div>
             <p>Post to anyone</p>
@@ -70,21 +100,21 @@ const PostModal = ({ open, setOpen, publishPost, input, setInput }) => {
             </div>
           </div>
         )} */}
-        {/* {imgUrl && (
+        {imgUrl && (
           <div className="post-image">
             <img src={imgUrl} alt="uploaded file" height={200} />
           </div>
-        )} */}
-        <div className="post-options">
+        )}
+        <div className="post-modal-options">
           <label htmlFor="post-image-upload">
             <InputOption Icon={PhotoIcon} color="#1677FF" />
           </label>
           <input
             id="post-image-upload"
             type="file"
-            // onChange={(e) => {
-            //   uploadPostImage(e.target.files[0]);
-            // }}
+            onChange={(e) => {
+              uploadPostImage(e.target.files[0]);
+            }}
             hidden
           />
           <InputOption Icon={SmartDisplayIcon} color="gray" />

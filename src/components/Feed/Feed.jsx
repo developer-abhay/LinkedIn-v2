@@ -46,7 +46,7 @@ function Feed() {
     );
   }, []);
 
-  const publishPost = (e) => {
+  const publishPost = (e, imgUrl) => {
     e.preventDefault();
 
     setDoc(doc(dbRef), {
@@ -57,6 +57,7 @@ function Feed() {
       likeStats: { liked: false, Count: 257 },
       commentStats: { Count: 0, comments: [] },
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      postImageURL: imgUrl ? imgUrl : "",
     });
 
     setInput("");
@@ -72,6 +73,7 @@ function Feed() {
     <div className="feed">
       <div className="feed-input-container">
         <PostModal
+          user={user}
           open={open}
           setOpen={setOpen}
           publishPost={publishPost}
@@ -124,6 +126,7 @@ function Feed() {
               likeStats,
               commentStats,
               timestamp,
+              postImageURL,
             },
           }) => {
             return (
@@ -138,6 +141,7 @@ function Feed() {
                 commentStats={commentStats}
                 timestamp={timestamp}
                 email={user.email}
+                postImageURL={postImageURL}
               />
             );
           }

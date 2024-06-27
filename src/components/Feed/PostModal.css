@@ -48,12 +48,10 @@
   height: auto;
 }
 
-.post-options {
+.post-modal-options {
   display: flex;
-  flex-direction: row;
 }
-.post-options > div {
-  /* border-radius: 5px; */
+.post-modal-options > div {
   width: 45px;
 }
 .post-modal-btn {

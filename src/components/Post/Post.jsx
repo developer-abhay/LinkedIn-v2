@@ -17,7 +17,8 @@ import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import CommentSection from "../Comments/CommentSection";
 import LikeFnc from "../Likes/LikeFnc";
 import InputOption from "../Feed/InputOption";
-import { firestore } from "../../firebase";
+import { firestore, storage } from "../../firebase";
+import { deleteObject } from "firebase/storage";
 
 const Post = forwardRef(
   (
@@ -31,6 +32,7 @@ const Post = forwardRef(
       commentStats,
       timestamp,
       email,
+      postImageURL,
     },
     ref
   ) => {
@@ -74,13 +76,23 @@ const Post = forwardRef(
     const handleOpenChange = (newOpen) => {
       setOpen(newOpen);
     };
+
+    // Delete Post FUnction
+    // const imageRef = ref(storage, `postImages/goku.jpeg`);
     const deletePost = async () => {
       try {
         await deleteDoc(doc(firestore, "posts", id));
-        setOpen(false);
       } catch (err) {
         console.log(err);
       }
+      // deleteObject(imageRef)
+      //   .then(() => {
+      //     console.log("deleted");
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
+      setOpen(false);
     };
     const content = (
       <div className="post-options">
@@ -140,6 +152,7 @@ const Post = forwardRef(
 
         <div className="post-body">
           <p className="message">{message}</p>
+          {postImageURL && <img src={postImageURL} alt="post-image" />}
         </div>
 
         <div className="info-bar">

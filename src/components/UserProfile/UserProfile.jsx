@@ -142,7 +142,14 @@ const UserProfile = () => {
         <h2>Posts</h2>
         <FlipMove>
           {userPosts.map(
-            ({ id, message, likeStats, commentStats, timestamp }) => {
+            ({
+              id,
+              message,
+              likeStats,
+              commentStats,
+              timestamp,
+              postImageURL,
+            }) => {
               return (
                 <Post
                   key={id}
@@ -155,6 +162,7 @@ const UserProfile = () => {
                   commentStats={commentStats}
                   timestamp={timestamp}
                   email={email}
+                  postImageURL={postImageURL}
                 />
               );
             }
