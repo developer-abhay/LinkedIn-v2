@@ -137,6 +137,7 @@ function Feed() {
                 likeStats={likeStats}
                 commentStats={commentStats}
                 timestamp={timestamp}
+                email={user.email}
               />
             );
           }

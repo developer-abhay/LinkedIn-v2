@@ -1,6 +1,6 @@
 import React from "react";
 
-function InputOption({ Icon, title, color, feature, showModal }) {
+function InputOption({ Icon, title, color, feature }) {
   return (
     <>
       {feature ? (

@@ -1,15 +1,23 @@
 import React, { forwardRef, useState } from "react";
+import { Button, Popover, Space } from "antd";
 import "./Post.css";
+import { doc, deleteDoc } from "firebase/firestore";
 //MUI
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { Avatar } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import CommentIcon from "@mui/icons-material/Comment";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import BookmarkBorderOutlinedIcon from "@mui/icons-material/BookmarkBorderOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 //Component
 import CommentSection from "../Comments/CommentSection";
 import LikeFnc from "../Likes/LikeFnc";
 import InputOption from "../Feed/InputOption";
+import { firestore } from "../../firebase";
 
 const Post = forwardRef(
   (
@@ -22,6 +30,7 @@ const Post = forwardRef(
       likeStats,
       commentStats,
       timestamp,
+      email,
     },
     ref
   ) => {
@@ -30,7 +39,7 @@ const Post = forwardRef(
     const timeConvert = () => {
       try {
         const current = new Date().getTime();
-        const postTime = new Date(timestamp.seconds * 1000).getTime();
+        const postTime = new Date(timestamp?.seconds * 1000).getTime();
         const diff = (current - postTime) / 1000;
 
         if (diff < 60) {
@@ -60,6 +69,50 @@ const Post = forwardRef(
       commentSection.classList.toggle("show-comments");
     };
 
+    // COntent and functions for post options
+    const [open, setOpen] = useState(false);
+    const handleOpenChange = (newOpen) => {
+      setOpen(newOpen);
+    };
+    const deletePost = async () => {
+      try {
+        await deleteDoc(doc(firestore, "posts", id));
+        setOpen(false);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    const content = (
+      <div className="post-options">
+        {description === email ? (
+          <>
+            <div onClick={deletePost}>
+              <DeleteIcon />
+              Delete This Post
+            </div>
+            <div>
+              <EditOutlinedIcon />
+              Edit Post
+            </div>
+          </>
+        ) : (
+          ""
+        )}
+        <div>
+          <BookmarkBorderOutlinedIcon />
+          Save This Post
+        </div>
+        <div>
+          <VisibilityOffOutlinedIcon />
+          Not Interested
+        </div>
+        <div>
+          <CancelOutlinedIcon />
+          Unfollow
+        </div>
+      </div>
+    );
+
     return (
       <div ref={ref} className="post">
         <div className="post-header">
@@ -71,7 +124,18 @@ const Post = forwardRef(
               <p>{description}</p>
             </div>
           </div>
-          <MoreHorizIcon className="post-info-icon" />
+          <Space wrap className="post-info-icon">
+            <Popover
+              open={open}
+              onOpenChange={handleOpenChange}
+              content={content}
+              arrow={false}
+              trigger="click"
+              placement="bottomRight"
+            >
+              <MoreHorizIcon />
+            </Popover>
+          </Space>
         </div>
 
         <div className="post-body">

@@ -28,7 +28,8 @@
 
 .post-text-area {
   width: 100%;
-  min-height: 200px;
+  /* height: auto; */
+  height: 100px;
   margin: 20px 0px;
   font-size: 18px;
   font-weight: 500;
@@ -36,9 +37,24 @@
   outline: none;
   resize: none;
 }
+.post-image {
+  width: 100%;
+  text-align: center;
+}
+.post-image > img {
+  max-width: 500px;
+  max-height: 500px;
+  width: auto;
+  height: auto;
+}
 
 .post-options {
   display: flex;
+  flex-direction: row;
+}
+.post-options > div {
+  /* border-radius: 5px; */
+  width: 45px;
 }
 .post-modal-btn {
   background-color: #0a66c2;

@@ -7,7 +7,6 @@ import { firestore } from "../../firebase";
 
 const UserInfoModal = ({ open, setOpen, uid }) => {
   //   const [loading, setLoading] = useState(false);
-  console.log(uid);
 
   const [userData, setUserData] = useState({});
 

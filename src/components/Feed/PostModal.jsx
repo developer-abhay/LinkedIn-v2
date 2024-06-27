@@ -9,19 +9,12 @@ import PhotoIcon from "@mui/icons-material/Photo";
 import SmartDisplayIcon from "@mui/icons-material/SmartDisplay";
 import EventIcon from "@mui/icons-material/Event";
 import NewspaperIcon from "@mui/icons-material/Newspaper";
-import { ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../../firebase";
 
 const PostModal = ({ open, setOpen, publishPost, input, setInput }) => {
   const [postBtnDisabled, setPostBtnDisabled] = useState(true);
 
-  //Upload Image to firebase storage
-  const [file, setFile] = useState(null);
-  const fileRef = ref(storage, `linkedIn-Clone/goku.jpeg`);
-
-  const uploadFile = async () => {
-    await uploadBytes(fileRef, file);
-  };
   useEffect(() => {
     setPostBtnDisabled(input.length === 0);
   }, [input]);
@@ -70,17 +63,28 @@ const PostModal = ({ open, setOpen, publishPost, input, setInput }) => {
             setInput(e.target.value);
           }}
         ></textarea>
+        {/* {!imgUrl && (
+          <div className="outerbar">
+            <div className="innerbar" style={{ width: `${progresspercent}%` }}>
+              {progresspercent}%
+            </div>
+          </div>
+        )} */}
+        {/* {imgUrl && (
+          <div className="post-image">
+            <img src={imgUrl} alt="uploaded file" height={200} />
+          </div>
+        )} */}
         <div className="post-options">
           <label htmlFor="post-image-upload">
-            <InputOption Icon={PhotoIcon} color="gray" />
+            <InputOption Icon={PhotoIcon} color="#1677FF" />
           </label>
           <input
             id="post-image-upload"
             type="file"
-            onChange={(e) => {
-              setFile(e.target.files[0]);
-              uploadFile();
-            }}
+            // onChange={(e) => {
+            //   uploadPostImage(e.target.files[0]);
+            // }}
             hidden
           />
           <InputOption Icon={SmartDisplayIcon} color="gray" />

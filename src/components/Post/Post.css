@@ -27,11 +27,25 @@
   color: gray;
 }
 
-.post-info-icon {
-  position: relative;
-  right: 0px;
+.post-info-icon:hover {
+  cursor: pointer;
+  color: #757575;
 }
-
+.post-options {
+  display: flex;
+  flex-direction: column;
+}
+.post-options > div {
+  display: flex;
+  align-items: center;
+  margin: 1px;
+  padding: 4px 10px;
+  gap: 5px;
+}
+.post-options > div:hover {
+  background-color: #ececec;
+  cursor: pointer;
+}
 /* Body */
 .post-body {
   font-size: 12px;
