@@ -23,7 +23,6 @@ function Header() {
 
   //Show Logout
   const showLogout = () => {
-    const html = document.documentElement;
     const logoutOption = document.querySelector(".logout-option");
     logoutOption.classList.toggle("display-none");
   };

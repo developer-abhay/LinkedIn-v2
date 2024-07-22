@@ -1,5 +1,5 @@
 import React, { forwardRef, useState } from "react";
-import { Button, Popover, Space } from "antd";
+import { Popover, Space } from "antd";
 import "./Post.css";
 import { doc, deleteDoc } from "firebase/firestore";
 //MUI
@@ -17,8 +17,7 @@ import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import CommentSection from "../Comments/CommentSection";
 import LikeFnc from "../Likes/LikeFnc";
 import InputOption from "../Feed/InputOption";
-import { firestore, storage } from "../../firebase";
-import { deleteObject } from "firebase/storage";
+import { firestore } from "../../firebase";
 
 const Post = forwardRef(
   (
@@ -152,7 +151,7 @@ const Post = forwardRef(
 
         <div className="post-body">
           <p className="message">{message}</p>
-          {postImageURL && <img src={postImageURL} alt="post-image" />}
+          {postImageURL && <img src={postImageURL} alt="post" />}
         </div>
 
         <div className="info-bar">

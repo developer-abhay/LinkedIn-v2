@@ -44,7 +44,7 @@ function Feed() {
         }))
       )
     );
-  }, []);
+  });
 
   const publishPost = (e, imgUrl) => {
     e.preventDefault();

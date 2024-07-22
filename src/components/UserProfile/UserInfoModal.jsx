@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Modal, Form, Input, Select, DatePicker } from "antd";
+import { Button, Modal, Form, Input, Select } from "antd";
 import "./UserInfoModal.css";
 //firebase
 import { updateDoc, doc, getDoc } from "firebase/firestore";
@@ -13,15 +13,21 @@ const UserInfoModal = ({ open, setOpen, uid }) => {
   const userRef = doc(firestore, "users", uid);
 
   useEffect(() => {
-    try {
-      getDoc(userRef).then((data) => {
-        const userDoc = data.data();
-        setUserData(userDoc);
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  }, []);
+    const fetchUserData = async () => {
+      try {
+        const userDoc = await getDoc(userRef);
+        if (userDoc.exists()) {
+          setUserData(userDoc.data());
+        } else {
+          console.log("No such document!");
+        }
+      } catch (err) {
+        console.error("Error fetching document: ", err);
+      }
+    };
+
+    fetchUserData();
+  }, [userData, userRef]);
 
   const handleOk = async () => {
     updateDoc(userRef, { ...userData });
@@ -67,7 +73,7 @@ const UserInfoModal = ({ open, setOpen, uid }) => {
           <Form.Item label="Full Name" required>
             <Input
               placeholder="Enter your name"
-              value={userData.name}
+              value={userData?.name}
               onChange={(e) =>
                 setUserData({ ...userData, name: e.target.value })
               }
@@ -77,7 +83,7 @@ const UserInfoModal = ({ open, setOpen, uid }) => {
           <Form.Item label="Description" required>
             <Input
               placeholder="Enter a catchy description"
-              value={userData.description}
+              value={userData?.description}
               onChange={(e) =>
                 setUserData({ ...userData, description: e.target.value })
               }
@@ -86,7 +92,7 @@ const UserInfoModal = ({ open, setOpen, uid }) => {
           <Form.Item label="City" required>
             <Input
               placeholder="Where do you Live?"
-              value={userData.city}
+              value={userData?.city}
               onChange={(e) =>
                 setUserData({ ...userData, city: e.target.value })
               }
@@ -95,7 +101,7 @@ const UserInfoModal = ({ open, setOpen, uid }) => {
           <Form.Item label="Country" required>
             <Input
               placeholder="What is your nationality?"
-              value={userData.country}
+              value={userData?.country}
               onChange={(e) =>
                 setUserData({ ...userData, country: e.target.value })
               }
@@ -114,7 +120,7 @@ const UserInfoModal = ({ open, setOpen, uid }) => {
             <Input.TextArea
               placeholder="A brief bio about yourself"
               style={{ resize: "none" }}
-              value={userData.about}
+              value={userData?.about}
               onChange={(e) =>
                 setUserData({ ...userData, about: e.target.value })
               }
@@ -123,7 +129,7 @@ const UserInfoModal = ({ open, setOpen, uid }) => {
 
           <Form.Item label="Gender" required>
             <Select
-              value={userData.gender}
+              value={userData?.gender}
               onChange={(value) => setUserData({ ...userData, gender: value })}
             >
               <Select.Option value="male">Male</Select.Option>
@@ -136,7 +142,7 @@ const UserInfoModal = ({ open, setOpen, uid }) => {
           <Form.Item label="Education" required>
             <Input
               placeholder="Your school/Institue name"
-              value={userData.education}
+              value={userData?.education}
               onChange={(e) =>
                 setUserData({ ...userData, education: e.target.value })
               }
@@ -145,7 +151,7 @@ const UserInfoModal = ({ open, setOpen, uid }) => {
           <Form.Item label="Company" required>
             <Input
               placeholder="Where do you work?"
-              value={userData.company}
+              value={userData?.company}
               onChange={(e) =>
                 setUserData({ ...userData, company: e.target.value })
               }

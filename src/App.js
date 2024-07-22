@@ -22,6 +22,7 @@ import UserProfile from "./components/UserProfile/UserProfile";
 function App() {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
+  console.log(process.env.REACT_APP_FIREBASE_API_KEY);
 
   useEffect(() => {
     try {
@@ -41,7 +42,7 @@ function App() {
     } catch (err) {
       console.log(err);
     }
-  }, []);
+  });
 
   return (
     <div className="app">

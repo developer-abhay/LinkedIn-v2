@@ -4,12 +4,12 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBRkHcQuGT5P0GgZcBEtRU_kzl51YejNDM",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: "linkedin-clone-486a0.firebaseapp.com",
   projectId: "linkedin-clone-486a0",
   storageBucket: "linkedin-clone-486a0.appspot.com",
-  messagingSenderId: "19372388810",
-  appId: "1:19372388810:web:4f157569940a3d0bb05f33",
+  messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
 
 //initialize app
